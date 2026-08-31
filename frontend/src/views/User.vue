@@ -24,9 +24,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import request from '../utils/request';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 const userName = ref('');
 const orders = ref([]);
@@ -44,4 +44,23 @@ const fetchOrders = async () => {
   } catch (error) { ElMessage.error('查询失败'); }
   finally { loading.value = false; }
 };
+
+
+onMounted(async () => {
+  const token = localStorage.getItem('globuy_token');
+  if (token) {
+    try {
+      await ElMessageBox.confirm(
+        '检测到您有已下的订单，是否立即使用专属Token查询？',
+        '订单提示',
+        { confirmButtonText: '立即查询', cancelButtonText: '手动输入', type: 'info' }
+      );
+      // 如果点击了“立即查询”，自动把 token 解析并查询（这里简化为提示）
+      ElMessage.info('Token已识别，正在为您加载订单...');
+      // TODO: 后续可在此处调用后端通过 token 查订单的接口
+    } catch {
+      // 用户点击了手动输入，不做处理
+    }
+  }
+});
 </script>

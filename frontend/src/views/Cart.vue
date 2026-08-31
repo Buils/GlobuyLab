@@ -75,10 +75,10 @@ const handleCheckout = async () => {
     });
 
     if (res.data.code === 200) {
-      ElMessage.success('订单创建成功！');
-      // 清空购物车
+      // 保存 Token 到本地
+      localStorage.setItem('globuy_token', res.data.data.token);
+      ElMessage.success('订单创建成功！请保存您的专属Token以查询订单');
       cartStore.cartItems = []; 
-      // 跳转到用户中心（后续可以在这里看订单）
       router.push('/user');
     }
   } catch (error) {
