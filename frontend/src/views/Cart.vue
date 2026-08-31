@@ -57,10 +57,35 @@ const handleRemove = (productId) => {
   ElMessage.success('商品已移除')
 }
 
+
 // 去结算
-const handleCheckout = () => {
-  ElMessage.success('订单结算功能将在第七天开发')
-  // 以后这里会跳转到结算页面或调用后端创建订单接口
+const handleCheckout = async () => {
+  try {
+    const { value: address } = await ElMessageBox.prompt('请输入您的收货地址', '确认结算', {
+      confirmButtonText: '提交订单',
+      cancelButtonText: '取消',
+      inputPattern: /\S+/,
+      inputErrorMessage: '地址不能为空'
+    });
+
+    // 调用后端创建订单接口
+    const res = await request.post('/orders', {
+      items: cartStore.cartItems,
+      address: address
+    });
+
+    if (res.data.code === 200) {
+      ElMessage.success('订单创建成功！');
+      // 清空购物车
+      cartStore.cartItems = []; 
+      // 跳转到用户中心（后续可以在这里看订单）
+      router.push('/user');
+    }
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('结算失败，请重试');
+    }
+  }
 }
 </script>
 
