@@ -9,6 +9,7 @@
       <el-menu-item index="/product">商品展示</el-menu-item>
       <el-menu-item index="/cart">购物车</el-menu-item>
       <el-menu-item index="/user">用户中心</el-menu-item>
+      <el-menu-item index="/contact">联系我们</el-menu-item>
     </el-menu>
     <div style="padding: 20px;">
       <router-view></router-view>

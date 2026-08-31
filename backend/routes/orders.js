@@ -32,7 +32,9 @@ router.post('/', async (req, res) => {
         await connection.commit();
         connection.release();
 
-        res.json({ code: 200, message: '订单创建成功', data: { orderId } });
+        const token = Buffer.from(`user_${orderId}_${Date.now()}`).toString('base64');
+        // 修改返回结果：
+        res.json({ code: 200, message: '订单创建成功', data: { orderId, token } });
     } catch (error) {
         res.status(500).json({ code: 500, message: '订单创建失败', data: null });
     }
