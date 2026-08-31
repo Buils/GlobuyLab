@@ -38,4 +38,21 @@ router.post('/', async (req, res) => {
     }
 });
 
+// 获取所有订单（管理员用）
+router.get('/all', async (req, res) => {
+    const [orders] = await db.query('SELECT * FROM orders ORDER BY created_at DESC');
+    for (let order of orders) {
+        const [items] = await db.query('SELECT * FROM order_items WHERE order_id = ?', [order.id]);
+        order.items = items;
+    }
+    res.json({ code: 200, message: '获取成功', data: orders });
+});
+
+// 修改订单状态
+router.put('/:id/status', async (req, res) => {
+    const { status } = req.body;
+    await db.query('UPDATE orders SET status=? WHERE id=?', [status, req.params.id]);
+    res.json({ code: 200, message: '状态更新成功', data: null });
+});
+
 module.exports = router;
