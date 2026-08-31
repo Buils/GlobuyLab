@@ -8,6 +8,9 @@ const PORT = 3000;
 app.use(cors()); // 允许跨域
 app.use(express.json()); // 解析 JSON 数据
 
+const productsRouter = require('./routes/products');
+app.use('/api/products', productsRouter);
+
 // 测试接口：检查后端是否跑通
 app.get('/api/test', (req, res) => {
     res.json({
