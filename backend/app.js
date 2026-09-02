@@ -20,6 +20,9 @@ app.use('/api/feedbacks', feedbacksRouter);
 const categoriesRouter = require('./routes/categories');
 app.use('/api/categories', categoriesRouter);
 
+const authRouter = require('./routes/auth');
+app.use('/api/auth', authRouter);
+
 // 测试接口：检查后端是否跑通
 app.get('/api/test', (req, res) => {
     res.json({

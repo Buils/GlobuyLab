@@ -12,9 +12,19 @@ const routes = [
     component: () => import('../views/Product.vue')
   },
   {
+    path: '/product/:id',
+    name: 'ProductDetail',
+    component: () => import('../views/ProductDetail.vue')
+  },
+  {
     path: '/cart',
     name: 'Cart',
     component: () => import('../views/Cart.vue')
+  },
+  {
+    path: '/fetchorders',
+    name: 'FetchOrders',
+    component: () => import('../views/FetchOrders.vue')
   },
   {
     path: '/user',
@@ -28,6 +38,10 @@ const routes = [
   { path: '/contact', 
     name: 'Contact', 
     component: () => import('../views/Contact.vue') 
+  },
+  { path: '/checkout', 
+    name: 'Checkout', 
+    component: () => import('../views/Checkout.vue') 
   }
 ]
 
